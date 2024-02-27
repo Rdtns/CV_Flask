@@ -14,7 +14,7 @@ def ReadBDD():
     data = cursor.fetchall()
     conn.close()
 
-Rendre le template HTML et transmettre les données
+#Rendre le template HTML et transmettre les données
     return render_template('read_data.html', data=data)
 
 @app.route('/')
