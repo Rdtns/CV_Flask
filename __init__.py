@@ -10,6 +10,10 @@ app = Flask(__name__) #creating flask app name
 def home():
     return render_template("formulaire.html")
 
+@app.route('/home')
+def home():
+    return render_template('index.html')
+    
 # Création d'une nouvelle route pour la lecture de la BDD
 @app.route("/consultation")
 def ReadBDD():
