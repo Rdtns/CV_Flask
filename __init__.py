@@ -5,7 +5,7 @@ from urllib.request import urlopen
 import sqlite3
 
 app = Flask(name) #creating flask app name
-Création d'une nouvelle route pour la lecture de la BDD
+#Création d'une nouvelle route pour la lecture de la BDD
 @app.route("/consultation/")
 def ReadBDD():
     conn = sqlite3.connect('database.db')
