@@ -8,7 +8,7 @@ app = Flask(__name__)
 
 @app.route('/consultation/')
 def consultation():
-    conn = sqlite3.connect('/home/groshenythibaut/database.db')
+    conn = sqlite3.connect('/home/Rdtns/database.db')
     cursor = conn.cursor()
     cursor.execute('SELECT * FROM clients;')
     data = cursor.fetchall()
