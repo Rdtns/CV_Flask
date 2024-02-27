@@ -6,7 +6,6 @@ import sqlite3
 
 app = Flask(__name__) #creating flask app name
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///database.db'
-db.init_app(app)
 
 @app.route('/')
 def home():
