@@ -1,7 +1,6 @@
 from flask import Flask, render_template_string, render_template, jsonify
 from flask import Flask, render_template, request, redirect
 from flask import json
-from models import db, AddMessageModel
 from urllib.request import urlopen
 import sqlite3
 
