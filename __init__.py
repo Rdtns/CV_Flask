@@ -1,25 +1,18 @@
 from flask import Flask, render_template_string, render_template, jsonify
 from flask import Flask, render_template, request, redirect
 from flask import json
+from Forms import AddForm
+from models import db, AddMessageModel
 from urllib.request import urlopen
 import sqlite3
 
 app = Flask(__name__) #creating flask app name
-#Création d'une nouvelle route pour la lecture de la BDD
-@app.route("/consultation/")
-def ReadBDD():
-    conn = sqlite3.connect('database.db')
-    cursor = conn.cursor()
-    cursor.execute('SELECT * FROM clients;')
-    data = cursor.fetchall()
-    conn.close()
-
-#Rendre le template HTML et transmettre les données
-    return render_template('read_data.html', data=data)
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///database.db'
+db.init_app(app)
 
 @app.route('/')
 def home():
-    return render_template("index.html")
+    return render_template("resume_2.html")
 
 @app.route('/resume_1')
 def resume_1():
@@ -33,5 +26,48 @@ def resume_2():
 def resume_template():
     return render_template("resume_template.html")
 
-if(__name == "__main"):
+# Création d'une nouvelle route pour la lecture de la BDD
+@app.route("/consultation/")
+def ReadBDD():
+    data = AddMessageModel.query.all()
+    return render_template('read_data.html', data=data)
+
+@app.route("/ajouter_message/", methods=['GET', 'POST'])
+def ajouter_message():
+    form = AddForm()
+    
+    if form.validate_on_submit():
+        email = form.email.data
+        message = form.message.data
+        
+        new_data = AddMessageModel()
+        new_data.email = email
+        new_data.message = message
+        db.session.add(new_data)
+        db.session.commit()
+        return redirect(url_for('/consultation/'))
+    
+    # if request.method == 'POST':
+    #     # Récupérer les données du formulaire
+    #     email = request.form['email']
+    #     message = request.form['msg']
+        
+    #     # Insérer les données dans la base de données (ici, je suppose que tu as une table 'clients')
+    #     try: 
+    #         conn = get_db_connection()
+    #         cursor = conn.cursor()
+    #         cursor.execute('INSERT INTO message (email, msg) VALUES (?, ?);', (email, message))
+    #         conn.commit()
+    #     except sqlite3.Error as e:
+    #         return f'Error connecting to database: {e}'
+    #     finally:
+    #         conn.close()
+
+    #     # Rediriger vers la page de consultation des clients après l'ajout
+    #     return redirect(url_for('/consultation/'))
+
+    # Si la méthode est GET, simplement rendre le template du formulaire
+    return render_template('ajouter_message.html')
+
+if(__name__ == "__main__"):
     app.run()
