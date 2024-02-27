@@ -5,7 +5,6 @@ from urllib.request import urlopen
 import sqlite3
 
 app = Flask(__name__) #creating flask app name
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///database.db'
 
 @app.route('/')
 def home():
