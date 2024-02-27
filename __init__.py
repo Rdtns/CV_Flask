@@ -7,11 +7,11 @@ import sqlite3
 app = Flask(__name__) #creating flask app name
 
 @app.route('/consultationn')
-def homes():
+def home():
     return render_template("formulaire.html")
 
 # Création d'une nouvelle route pour la lecture de la BDD
-@app.route("/consultation/")
+@app.route("/consultation")
 def ReadBDD():
     conn = sqlite3.connect('database.db')
     cursor = conn.cursor()
