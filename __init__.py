@@ -6,7 +6,7 @@ import sqlite3
 
 app = Flask(__name__) #creating flask app name
 
-@app.route('/consultationn')
+@app.route('/consultationn') 
 def consultationn():
     return render_template("formulaire.html")
     
