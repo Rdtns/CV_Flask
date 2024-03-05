@@ -25,6 +25,21 @@ def ReadBDD():
     # Rendre le template HTML et transmettre les données
     return render_template('read_data.html', data=data)
 
+@app.route('/messages', methods=['GET','POST'])
+def ajouter_message():
+    if request.method == 'POST':
+        FatherName = request.form['fathername']
+        MotherName= request.form['mothername']
+        PermanentAddress= request.form['permanentaddress']
+        
+        conn = get_db_connection()
+        cursor = conn.cursor()
+        cursor.execute('INSERT INTO clients (fathername, mothername, permanentaddress) VALUES (?, ?, ?)', (fathername, mothername, permanentaddress))
+        conn.commit()
+        
+        return redirect('/confirmation.html')
+        
+    return render_template('message.html')
 # Route pour la page d'accueil
 @app.route('/')
 def home():
