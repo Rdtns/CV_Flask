@@ -1,7 +1,13 @@
-from flask import Flask, render_template, jsonify
+from flask import Flask, render_template, request, redirect
 import sqlite3
 
 app = Flask(__name__) # création de l'application Flask
+
+# Fonction pour établir la connexion à la base de données
+def get_db_connection():
+    conn = sqlite3.connect('/home/raid/database.db')
+    conn.row_factory = sqlite3.Row
+    return conn
 
 # Route pour afficher le formulaire
 @app.route('/consultationn') 
@@ -25,21 +31,25 @@ def ReadBDD():
     # Rendre le template HTML et transmettre les données
     return render_template('read_data.html', data=data)
 
-@app.route('/messages', methods=['GET','POST'])
+# Route pour ajouter un message
+@app.route('/messages', methods=['GET', 'POST'])
 def ajouter_message():
     if request.method == 'POST':
         FatherName = request.form['fathername']
-        MotherName= request.form['mothername']
-        PermanentAddress= request.form['permanentaddress']
+        MotherName = request.form['mothername']
+        PermanentAddress = request.form['permanentaddress']
         
         conn = get_db_connection()
         cursor = conn.cursor()
-        cursor.execute('INSERT INTO clients (fathername, mothername, permanentaddress) VALUES (?, ?, ?)', (fathername, mothername, permanentaddress))
+        cursor.execute('INSERT INTO clients (fathername, mothername, permanentaddress) VALUES (?, ?, ?)', (FatherName, MotherName, PermanentAddress))
         conn.commit()
         
-        return redirect('/confirmation.html')
+        conn.close() # Fermer la connexion à la base de données
+        
+        return redirect('/confirmation.html') # Rediriger vers la page de confirmation
         
     return render_template('message.html')
+
 # Route pour la page d'accueil
 @app.route('/')
 def home():
@@ -62,6 +72,4 @@ def resume_template():
 
 # Exécution de l'application Flask
 if __name__ == "__main__":
-    app.run()
-
     app.run()
