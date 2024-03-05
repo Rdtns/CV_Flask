@@ -1,40 +1,52 @@
-from flask import Flask, render_template_string, render_template, jsonify
-from flask import Flask, render_template, request, redirect
-from flask import json
+from flask import Flask, render_template, jsonify
 import sqlite3
 
-app = Flask(__name__) #creating flask app name
+app = Flask(__name__) # création de l'application Flask
 
+# Route pour afficher le formulaire
 @app.route('/consultationn') 
 def consultationn():
     return render_template("formulaire.html")
-    
-# Création d'une nouvelle route pour la lecture de la BDD
+
+# Route pour lire les données depuis la base de données
 @app.route("/consultation")
 def ReadBDD():
-    conn = sqlite3.connect('database.db')
+    # Connexion à la base de données
+    conn = sqlite3.connect('/home/raid/database.db')
     cursor = conn.cursor()
+    
+    # Exécution de la requête SQL pour sélectionner toutes les données de la table 'clients'
     cursor.execute('SELECT * FROM clients;')
     data = cursor.fetchall()
+    
+    # Fermeture de la connexion à la base de données
     conn.close()
     
     # Rendre le template HTML et transmettre les données
     return render_template('read_data.html', data=data)
+
+# Route pour la page d'accueil
 @app.route('/')
 def home():
     return render_template("index.html")
 
+# Route pour le premier résumé
 @app.route('/resume_1')
 def resume_1():
     return render_template("resume_1.html")
 
+# Route pour le deuxième résumé
 @app.route('/resume_2')
 def resume_2():
     return render_template("resume_2.html")
 
+# Route pour le modèle de CV
 @app.route('/resume_template')
 def resume_template():
     return render_template("resume_template.html")
 
-if(__name__ == "__main__"):
+# Exécution de l'application Flask
+if __name__ == "__main__":
+    app.run()
+
     app.run()
