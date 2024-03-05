@@ -7,19 +7,19 @@ with open('schema.sql') as f:
 
 cur = connection.cursor()
 
-cur.execute("INSERT INTO Clients (father_name, mother_name, permanent_address) VALUES (?, ?, ?)",
+cur.execute("INSERT INTO Clients (fathername, mothername, permanentaddress) VALUES (?, ?, ?)",
             ('Moby-Dick', 'Herman Melville', '137 BDV AUGUSTE')
             )
 
-cur.execute("INSERT INTO Clients (father_name, mother_name, permanent_address) VALUES (?, ?, ?)",
+cur.execute("INSERT INTO Clients (fathername, mothername, permanentaddress) VALUES (?, ?, ?)",
             ('Mick Hol', 'THANG', '1 BDV EMILE')
             )
 
-cur.execute("INSERT INTO Clients (father_name, mother_name, permanent_address) VALUES (?, ?, ?)",
+cur.execute("INSERT INTO Clients (fathername, mothername, permanentaddress) VALUES (?, ?, ?)",
             ('BOBY POT', 'XUEE', '18 CHEMIN ROUGE')
             )
 
-cur.execute("INSERT INTO Clients (father_name, mother_name, permanent_address) VALUES (?, ?, ?)",
+cur.execute("INSERT INTO Clients (fathername, mothername, permanentaddress) VALUES (?, ?, ?)",
             ('ZHANG THEODORE', 'LAURA RO', '118 RUE JOSEPH')
             )
 
