@@ -13,6 +13,12 @@ def get_db_connection():
 @app.route('/consultationn') 
 def consultationn():
     return render_template("formulaire.html")
+@app.route('/confirmation') 
+def confirmation():
+    return render_template("confirmation.html")
+@app.route('/message') 
+def message():
+    return render_template("message.html")
 
 # Route pour lire les données depuis la base de données
 @app.route("/consultation")
